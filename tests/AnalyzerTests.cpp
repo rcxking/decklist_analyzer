@@ -56,7 +56,6 @@ SCENARIO("An Analyzer object is to be used", "[Analyzer]") {
       }
     } 
   }
-
   GIVEN("An Analyzer object and a directory with decklists") {
     const std::string DIRECTORY("sample_dir");
     Analyzer analyzer(DIRECTORY);
@@ -74,4 +73,26 @@ SCENARIO("An Analyzer object is to be used", "[Analyzer]") {
       }
     } 
   } 
+  GIVEN("An Analyzer object and a directory with decklists") {
+    const std::string DIRECTORY("sample_dir");
+    Analyzer analyzer(DIRECTORY);
+    WHEN("The Analyzer examines the decklists and sorts the most-played cards in order") {
+      const bool RES = analyzer.BuildCardMap();
+      const std::string OUTPUT = analyzer.GetMostPlayedCards();
+      THEN("The order is computed correctly") {
+        REQUIRE(RES == true);
+        const std::string EXPECTED_OUTPUT("Most-Played Cards:\nBlack Lotus: 11\nBurning-Tree Emissary: 4\nPreordain: 2\nRancor: 2\nMox Jet: 1\n");
+        REQUIRE(OUTPUT == EXPECTED_OUTPUT);
+      }
+    }
+    WHEN("The Analyzer examines the decklists and the most-played card is computed") {
+      const bool RES = analyzer.BuildCardMap();
+      const std::string OUTPUT = analyzer.GetMostPlayedCards(1);
+      THEN("The most played card is computed correctly") {
+        REQUIRE(RES == true);
+        const std::string EXPECTED_OUTPUT("Most-Played Cards:\nBlack Lotus: 11\n");
+        REQUIRE(OUTPUT == EXPECTED_OUTPUT);
+      }
+    }
+  }
 } 

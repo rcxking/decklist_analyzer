@@ -5,8 +5,15 @@ project(DeckAnalyzer)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# The main DeckAnalyzer executable
-add_executable(DeckAnalyzer src/main.cpp)
+# The main DeckAnalyzer executable.  Will install to /usr/local/bin.
+add_executable(DeckAnalyzer 
+  src/main.cpp
+  src/Analyzer.cpp
+)
+target_include_directories(DeckAnalyzer PUBLIC
+  inc
+)
+install(TARGETS DeckAnalyzer DESTINATION /usr/local/bin)
 
 # Catch2 Unit Tests
 find_package(Catch2 REQUIRED)
